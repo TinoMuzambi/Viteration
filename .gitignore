@@ -3,3 +3,6 @@
 *.tar.gz
 *.zip
 *.o
+.idea
+/cmake-build-debug/
+viterate
