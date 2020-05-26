@@ -1,8 +1,9 @@
 // MZMTIN002
 
 #include <string>
-#include <unordered_map>
+#include <map>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -46,7 +47,7 @@ vector<char> possibleActions(const string& s) {
     return {'U', 'L'};
 }
 
-vector<string> nextStates(const string& s, char a) {
+vector<string> nextStates(const string& s) {
     if (s == "s1") {
         return {"s2", "s4"};
     }
@@ -65,7 +66,7 @@ vector<string> nextStates(const string& s, char a) {
     return {"s3", "s5"};
 }
 
-bool convergedEnough(unordered_map<string, int> oldValues, unordered_map<string, int> values, double GAMMA) {
+bool convergedEnough(const map<string, int>& oldValues, const map<string, int>& values, double GAMMA) {
     double sum = 0;
     double sum2 = 0;
     for (const auto& i : oldValues) {
@@ -78,7 +79,7 @@ bool convergedEnough(unordered_map<string, int> oldValues, unordered_map<string,
 }
 
 int main() {
-    unordered_map<string, int> values; // Initialising
+    map<string, int> values; // Initialising
     values["s1"] = 0;
     values["s2"] = 0;
     values["s3"] = 0;
@@ -86,30 +87,31 @@ int main() {
     values["s5"] = 0;
     values["s6"] = 0;
 
-    vector<char> actions;
-    actions.push_back('L');
-    actions.push_back('R');
-    actions.push_back('U');
-    actions.push_back('D');
-
     double GAMMA = 0.8;
     bool converged = false;
+    int count = 0;
 
     while (!converged) {
-        unordered_map<string, int> oldValues = values;
-        for (auto state : values) {
+        map<string, int> oldValues = values;
+        for (const auto& state : values) {
             double best_EV = 0.0;
             for (auto action : possibleActions(state.first)) {
                 double EV = 0.0;
-                for (auto ns : nextStates(state.first, action)) {
+                for (auto ns : nextStates(state.first)) {
                     EV += P() * oldValues[ns];
                 }
                 best_EV = EV > best_EV ? EV : best_EV;
             }
             values[state.first] = R2(state.first) + GAMMA * best_EV;
         }
-
+        count++;
+        converged = convergedEnough(oldValues, values, GAMMA);
     }
+
+    for (const auto& x : values) {
+        cout << x.first << " " << x.second << endl;
+    }
+    cout << count << endl;
 
     return 0;
 }
