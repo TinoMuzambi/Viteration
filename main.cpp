@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -116,15 +117,17 @@ int main() {
         map<string, int> oldValues = values;
         for (const auto& state : values) {
             double curr_max = 0.0;
-            double new_max = 0;
+            vector<double> new_max;
             for (auto action : possibleActions(state.first)) {
                 double max_neighbour = 0;
                     if (oldValues[nextState(state.first, action)] > max_neighbour) {
                         max_neighbour = oldValues[nextState(state.first, action)] ;
                     }
-                new_max += R(state.first, action) + GAMMA * max_neighbour;
+                new_max.push_back(R(state.first, action) + GAMMA * max_neighbour);
             }
-            curr_max = new_max > curr_max ? new_max : curr_max;
+            if (!new_max.empty()) {
+                curr_max = *max_element(new_max.begin(), new_max.end());
+            }
             values[state.first] = curr_max;
         }
         count++;
