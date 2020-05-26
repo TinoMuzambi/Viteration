@@ -10,11 +10,18 @@ double P() {
     return 1.0;
 }
 
-int R(const string& s, char a, const string& s2) {
+int R(const string& s, const string& s2) {
     if (s == "s2" && s2 == "s3") {
         return 50;
     }
     else if (s == "s6" && s2 == "s3") {
+        return 100;
+    }
+    return 0;
+}
+
+int R2(const string& s) {
+    if (s == "s3") {
         return 100;
     }
     return 0;
@@ -80,11 +87,16 @@ int main() {
         unordered_map<string, int> oldValues = values;
         for (auto state : values) {
             double best_EV = 0.0;
-            double EV = 0.0;
             for (auto action : possibleActions(state.first)) {
+                double EV = 0.0;
+                for (auto ns : nextStates(state.first, action)) {
+                    EV += P() * oldValues[ns];
+                }
+                best_EV = EV > best_EV ? EV : best_EV;
             }
-            best_EV = EV > best_EV ? EV : best_EV;
+            values[state.first] = R2(state.first) + GAMMA * best_EV;
         }
+
     }
 
     return 0;
