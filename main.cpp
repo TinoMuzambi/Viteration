@@ -20,6 +20,25 @@ int R(const string& s, char a, const string& s2) {
     return 0;
 }
 
+vector<char> possibleActions(const string& s) {
+    if (s == "s1") {
+        return {'D', 'R'};
+    }
+    else if (s == "s2") {
+        return {'D', 'L', 'R'};
+    }
+    else if (s == "s3") {
+        return {};
+    }
+    else if (s == "s4") {
+        return {'U', 'R'};
+    }
+    else if (s == "s5") {
+        return {'U', 'L', 'R'};
+    }
+    return {'U', 'L'};
+}
+
 int main() {
     unordered_map<string, int> values; // Initialising
     values["s1"] = 0;
@@ -36,6 +55,13 @@ int main() {
     actions.push_back('D');
 
     double GAMMA = 0.8;
+    bool converged = false;
+
+    while (!converged) {
+        unordered_map<string, int> oldValues = values;
+
+
+    }
 
     return 0;
 }
