@@ -65,6 +65,18 @@ vector<string> nextStates(const string& s, char a) {
     return {"s3", "s5"};
 }
 
+bool convergedEnough(unordered_map<string, int> oldValues, unordered_map<string, int> values, double GAMMA) {
+    double sum = 0;
+    double sum2 = 0;
+    for (const auto& i : oldValues) {
+        sum += i.second;
+    }
+    for (const auto& i : values) {
+        sum2 += i.second;
+    }
+    return sum2 - sum < GAMMA;
+}
+
 int main() {
     unordered_map<string, int> values; // Initialising
     values["s1"] = 0;
