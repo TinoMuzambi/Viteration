@@ -39,6 +39,46 @@ vector<char> possibleActions(const string& s) {
     return {'U', 'L'};
 }
 
+string nextState(const string& s, char a) {
+    if (s == "s1") {
+        if (a == 'D') {
+            return "s4";
+        }
+        return "s2";
+    }
+    else if (s == "s2") {
+        if (a == 'D') {
+            return "s5";
+        }
+        else if (a == 'L') {
+            return "s1";
+        }
+        return "s3";
+    }
+    else if (s == "s3") {
+        return "";
+    }
+    else if (s == "s4") {
+        if (a == 'U') {
+            return "s1";
+        }
+        return "s5";
+    }
+    else if (s == "s5") {
+        if (a == 'U') {
+            return "s2";
+        }
+        else if (a == 'L') {
+            return "s4";
+        }
+        return "s6";
+    }
+    if (a == 'U') {
+        return "s3";
+    }
+    return "s5";
+}
+
 int main() {
     unordered_map<string, int> values; // Initialising
     values["s1"] = 0;
@@ -59,7 +99,13 @@ int main() {
 
     while (!converged) {
         unordered_map<string, int> oldValues = values;
+        for (auto state : values) {
+            double best_EV = 0.0;
+            for (auto action : possibleActions(state.first)) {
+                double EV = 0.0;
+            }
 
+        }
 
     }
 
