@@ -2,13 +2,17 @@
 # MZMTIN002
 
 default:
-	@g++ -I /Eigen/Dense main.cpp -o viterate
+	@g++ main.cpp v_iteration.cpp -o viterate
 
-main.run: main.o viterate.o
-	g++ main.run main.o viterate.o
+main.run: main.o v_iteration.o
+	g++ main.run main.o v_iteration.o
+main.o: main.cpp v_iteration.h
+	g++ -c -o main.o main.cpp
+v_iteration.o: v_iteration.cpp v_iteration.h
+	g++ -c -o v_iteration.o v_iteration.cpp
 
 clean:
-	@rm -f ./viterate *.o
+	@rm -f ./v_iteration *.o
 
 run:
 	@./viterate
