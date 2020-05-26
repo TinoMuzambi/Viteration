@@ -11,11 +11,11 @@ double P() {
     return 1.0;
 }
 
-int R(const string& s, const string& s2) {
-    if (s == "s2" && s2 == "s3") {
+int R(int s, char a) {
+    if (s == 1 && a == 'R') {
         return 50;
     }
-    else if (s == "s6" && s2 == "s3") {
+    else if (s == 5 && a == 'U') {
         return 100;
     }
     return 0;
@@ -89,9 +89,6 @@ double valueFunction(int state, vector<double> values) {
 
 int main() {
     vector<double> values = {0, 0, 0, 0, 0, 0};
-    for (int i = 0; i < values.size(); ++i) {
-
-    }
 
     return 0;
 }
