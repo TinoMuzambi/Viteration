@@ -78,17 +78,25 @@ bool convergedEnough(const map<string, int>& oldValues, const map<string, int>& 
     return sum2 - sum < GAMMA;
 }
 
-double valueFunction(int state, vector<double> values) {
-    for (int i = 0; i < values.size(); ++i) {
+double valueFunction(int state, vector<double> values, double GAMMA) {
+    for (int i = 0; i < values.size() - 1; ++i) {
         double currMax = 0;
         for (auto action : possibleActions(i)) {
-
+            double curr = R(i, action) + GAMMA * valueFunction(i + 1, values, GAMMA);
+            currMax = currMax > curr ? currMax : curr;
         }
+        values[i] = currMax;
     }
+    return values[state];
 }
 
 int main() {
     vector<double> values = {0, 0, 0, 0, 0, 0};
-
+    for (int i = 0; i < values.size(); ++i) {
+        values[i] = valueFunction(i, values, 0.8);
+    }
+    for (auto i : values) {
+        cout << i << endl;
+    }
     return 0;
 }
