@@ -94,15 +94,14 @@ int main() {
     while (!converged) {
         map<string, int> oldValues = values;
         for (const auto& state : values) {
-            double best_EV = 0.0;
+            double old_max = 0.0;
             for (auto action : possibleActions(state.first)) {
-                double EV = 0.0;
+                double new_max = 0.0;
                 for (auto ns : nextStates(state.first)) {
-                    EV += P() * oldValues[ns];
+
                 }
-                best_EV = EV > best_EV ? EV : best_EV;
+//                best_EV = EV > best_EV ? EV : best_EV;
             }
-            values[state.first] = R2(state.first) + GAMMA * best_EV;
         }
         count++;
         converged = convergedEnough(oldValues, values, GAMMA);
