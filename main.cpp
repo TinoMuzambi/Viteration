@@ -28,20 +28,20 @@ int R2(const string& s) {
     return 0;
 }
 
-vector<char> possibleActions(const string& s) {
-    if (s == "s1") {
+vector<char> possibleActions(int s) {
+    if (s == 0) {
         return {'D', 'R'};
     }
-    else if (s == "s2") {
+    else if (s == 1) {
         return {'D', 'L', 'R'};
     }
-    else if (s == "s3") {
+    else if (s == 2) {
         return {};
     }
-    else if (s == "s4") {
+    else if (s == 3) {
         return {'U', 'R'};
     }
-    else if (s == "s5") {
+    else if (s == 4) {
         return {'U', 'L', 'R'};
     }
     return {'U', 'L'};
@@ -78,40 +78,20 @@ bool convergedEnough(const map<string, int>& oldValues, const map<string, int>& 
     return sum2 - sum < GAMMA;
 }
 
-int main() {
-    map<string, int> values; // Initialising
-    values["s1"] = 0;
-    values["s2"] = 0;
-    values["s3"] = 0;
-    values["s4"] = 0;
-    values["s5"] = 0;
-    values["s6"] = 0;
+double valueFunction(int state, vector<double> values) {
+    for (int i = 0; i < values.size(); ++i) {
+        double currMax = 0;
+        for (auto action : possibleActions(i)) {
 
-    double GAMMA = 0.8;
-    bool converged = false;
-    int count = 0;
-
-    while (!converged) {
-        map<string, int> oldValues = values;
-        for (const auto& state : values) {
-            double best_EV = 0.0;
-            for (auto action : possibleActions(state.first)) {
-                double EV = 0.0;
-                for (auto ns : nextStates(state.first)) {
-                    EV += P() * oldValues[ns];
-                }
-                best_EV = EV > best_EV ? EV : best_EV;
-            }
-            values[state.first] = R2(state.first) + GAMMA * best_EV;
         }
-        count++;
-        converged = convergedEnough(oldValues, values, GAMMA);
     }
+}
 
-    for (const auto& x : values) {
-        cout << x.first << " " << x.second << endl;
+int main() {
+    vector<double> values = {0, 0, 0, 0, 0, 0};
+    for (int i = 0; i < values.size(); ++i) {
+
     }
-    cout << count << endl;
 
     return 0;
 }
