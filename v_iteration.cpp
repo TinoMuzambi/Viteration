@@ -2,12 +2,24 @@
 
 #include "v_iteration.h"
 
+/**
+ * Constructor for value iteration object.
+ * @param GAMMA discount factor for future rewards.
+ * @param THETA threshold for stopping iterations.
+ * @param values states initialised to 0.
+ */
 MZMTIN002::v_iteration::v_iteration(double GAMMA, double THETA, map<string, double> values) {
     this->GAMMA = GAMMA;
     this->THETA = THETA;
     this->values = std::move(values);
 }
 
+/**
+ * Reward function.
+ * @param s current state.
+ * @param a action being taken.
+ * @return Reward for being in state s and doing action a.
+ */
 int MZMTIN002::v_iteration::R(const string& s, char a) {
     if (s == "s2" && a == 'R') {
         return 50;
@@ -18,6 +30,11 @@ int MZMTIN002::v_iteration::R(const string& s, char a) {
     return 0;
 }
 
+/**
+ * All possible actions from state s.
+ * @param s current state.
+ * @return vector of possible actions.
+ */
 vector<char> MZMTIN002::v_iteration::possibleActions(const string& s) {
     if (s == "s1") {
         return {'D', 'R'};
@@ -37,6 +54,12 @@ vector<char> MZMTIN002::v_iteration::possibleActions(const string& s) {
     return {'U', 'L'};
 }
 
+/**
+ * Next state from current state if action a is taken.
+ * @param s current state.
+ * @param a action being taken.
+ * @return string resembling next state.
+ */
 string MZMTIN002::v_iteration::nextState(const string& s, char a) {
     if (s == "s1" && a == 'D') {
         return "s4";
@@ -52,9 +75,6 @@ string MZMTIN002::v_iteration::nextState(const string& s, char a) {
     }
     else if (s == "s2" && a == 'R') {
         return "s3";
-    }
-    else if (s == "s3") {
-        return "";
     }
     else if (s == "s4" && a == 'U') {
         return "s1";
@@ -77,6 +97,11 @@ string MZMTIN002::v_iteration::nextState(const string& s, char a) {
     return "s5";
 }
 
+/**
+ * Determines whether values have converged by checking against predefined THETA.
+ * @param oldValues values from previous iteration.
+ * @return true if difference between values is below threshold, false otherwise.
+ */
 bool MZMTIN002::v_iteration::convergedEnough(const map<string, double>& oldValues) {
     double sum = 0;
     double sum2 = 0;
@@ -89,6 +114,9 @@ bool MZMTIN002::v_iteration::convergedEnough(const map<string, double>& oldValue
     return sum2 - sum < THETA;
 }
 
+/**
+ * Runs value iteration to determine optimal values for all states.
+ */
 void MZMTIN002::v_iteration::doValueIteration() {
     bool converged = false;
     int count = 0;

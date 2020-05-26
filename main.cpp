@@ -15,7 +15,7 @@ int main() {
     values["s5"] = 0;
     values["s6"] = 0;
 
-    double GAMMA = 0.8;
+    double GAMMA = 0.8; // Setting parameters for value iteration.
     double THETA = 1e-4;
 
     MZMTIN002::v_iteration vIteration(GAMMA, THETA, values);
