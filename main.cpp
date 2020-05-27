@@ -22,8 +22,22 @@ int main() {
     cout << "Optimal values:" << endl;
     vIteration.doValueIteration();
 
-    cout << "\nOptimal policy:" << endl;
+    cout << "\n2. Optimal policy:" << endl;
     vIteration.getOptPolicy();
+
+    cout << "\n3. It is possible to change the reward function such that V* changes"
+            "\nbut the optimal policy remains unchanged. As long as the reward for"
+            "\ngoing from s6 to s3 is at least 1.58 times the reward for going from"
+            "\ns2 to s3, the optimal values will change and the policy will remain"
+            "\nthe same. For example, if we change the reward for going from s6 to"
+            "\ns3 to 79 (1.58 * 50), the optimal values are:"
+            "\ns1 - 40.45"
+            "\ns2 - 50.56"
+            "\ns3 - 0"
+            "\ns4 - 50.56"
+            "\ns5 - 63.2"
+            "\ns6 - 79"
+            "\nbut the optimal policy remains unchanged." << endl;
 
     return 0;
 }

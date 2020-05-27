@@ -112,7 +112,7 @@ void MZMTIN002::v_iteration::doValueIteration() {
 
     for (const auto& x : values)
         cout << x.first << " - " << x.second << endl;
-    cout << "\nConvergence in " << count << " iterations." << endl;
+    cout << "\n1. Convergence in " << count << " iterations." << endl;
 }
 
 /**
