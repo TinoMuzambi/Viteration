@@ -19,8 +19,10 @@ int main() {
     double THETA = 1e-4;
 
     MZMTIN002::v_iteration vIteration(GAMMA, THETA, values);
+    cout << "Optimal values:" << endl;
     vIteration.doValueIteration();
 
+    cout << "\nOptimal policy:" << endl;
     vIteration.getOptPolicy();
 
     return 0;

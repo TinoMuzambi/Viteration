@@ -143,9 +143,9 @@ void MZMTIN002::v_iteration::doValueIteration() {
     }
 
     for (const auto& x : values) {
-        cout << x.first << " " << x.second << endl;
+        cout << x.first << " - " << x.second << endl;
     }
-    cout << count << endl;
+    cout << "\nConvergence in " << count << " iterations." << endl;
 }
 
 /**
@@ -170,8 +170,12 @@ void MZMTIN002::v_iteration::getOptPolicy() {
         curr_state = next_state;
         actions.push_back(curr_state);
     }
-    for (auto state : actions) {
-        cout << state << " -> ";
+    for (int i = 0; i < actions.size(); i++) {
+        if (i < actions.size() -1) {
+            cout << actions[i] << " -> ";
+        }
+        else {
+            cout << actions[i] << endl;
+        }
     }
-    cout << endl;
 }
