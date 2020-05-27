@@ -147,3 +147,31 @@ void MZMTIN002::v_iteration::doValueIteration() {
     }
     cout << count << endl;
 }
+
+/**
+ * Use optimal values to determine optimal policy.
+ */
+void MZMTIN002::v_iteration::getOptPolicy() {
+    string curr_state = "s1";
+    vector<string> actions;
+    actions.push_back(curr_state);
+    while (curr_state != "s3") {
+        double curr_max = 0;
+        string next_state;
+        for (auto action : possibleActions(curr_state)) {
+            if (values[nextState(curr_state, action)] > curr_max || values[nextState(curr_state, action)] == 0) {
+                curr_max = values[nextState(curr_state, action)];
+                next_state = nextState(curr_state, action);
+                if (values[nextState(curr_state, action)] == 0) {
+                    break;
+                }
+            }
+        }
+        curr_state = next_state;
+        actions.push_back(curr_state);
+    }
+    for (auto state : actions) {
+        cout << state << " -> ";
+    }
+    cout << endl;
+}

@@ -21,5 +21,7 @@ int main() {
     MZMTIN002::v_iteration vIteration(GAMMA, THETA, values);
     vIteration.doValueIteration();
 
+    vIteration.getOptPolicy();
+
     return 0;
 }

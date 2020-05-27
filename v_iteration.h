@@ -29,6 +29,8 @@ namespace MZMTIN002 {
         bool convergedEnough(const map<string, double>& oldValues);    // Determine when to stop iterations by some value THETA.
 
         void doValueIteration();    // Iterate to find optimum values for each state
+
+        void getOptPolicy();    // Use optimal values to determine optimal policy.
     };
 }
 #endif //ASSIGNMENT_6_V_ITERATION_H
