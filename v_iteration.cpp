@@ -21,12 +21,10 @@ MZMTIN002::v_iteration::v_iteration(double GAMMA, double THETA, map<string, doub
  * @return Reward for being in state s and doing action a.
  */
 int MZMTIN002::v_iteration::R(const string& s, char a) {
-    if (s == "s2" && a == 'R') {
+    if (s == "s2" && a == 'R')
         return 50;
-    }
-    else if (s == "s6" && a == 'U') {
+    else if (s == "s6" && a == 'U')
         return 100;
-    }
     return 0;
 }
 
@@ -36,21 +34,16 @@ int MZMTIN002::v_iteration::R(const string& s, char a) {
  * @return vector of possible actions.
  */
 vector<char> MZMTIN002::v_iteration::possibleActions(const string& s) {
-    if (s == "s1") {
+    if (s == "s1")
         return {'D', 'R'};
-    }
-    else if (s == "s2") {
+    else if (s == "s2")
         return {'D', 'L', 'R'};
-    }
-    else if (s == "s3") {
+    else if (s == "s3")
         return {};
-    }
-    else if (s == "s4") {
+    else if (s == "s4")
         return {'U', 'R'};
-    }
-    else if (s == "s5") {
+    else if (s == "s5")
         return {'U', 'L', 'R'};
-    }
     return {'U', 'L'};
 }
 
@@ -61,39 +54,18 @@ vector<char> MZMTIN002::v_iteration::possibleActions(const string& s) {
  * @return string resembling next state.
  */
 string MZMTIN002::v_iteration::nextState(const string& s, char a) {
-    if (s == "s1" && a == 'D') {
+    if (s == "s1" && a == 'D' || s == "s5" && a == 'L')
         return "s4";
-    }
-    else if (s == "s1" && a == 'R') {
+    else if (s == "s1" && a == 'R' || s == "s5" && a == 'U')
         return "s2";
-    }
-    else if (s == "s2" && a == 'D') {
+    else if (s == "s2" && a == 'D' || s == "s4" && a == 'R')
         return "s5";
-    }
-    else if (s == "s2" && a == 'L') {
+    else if (s == "s2" && a == 'L' || s == "s4" && a == 'U')
         return "s1";
-    }
-    else if (s == "s2" && a == 'R') {
+    else if (s == "s2" && a == 'R' || s == "s6" && a == 'U')
         return "s3";
-    }
-    else if (s == "s4" && a == 'U') {
-        return "s1";
-    }
-    else if (s == "s4" && a == 'R') {
-        return "s5";
-    }
-    else if (s == "s5" && a == 'U') {
-        return "s2";
-    }
-    else if (s == "s5" && a == 'L') {
-        return "s4";
-    }
-    else if (s == "s5" && a == 'R') {
+    else if (s == "s5" && a == 'R')
         return "s6";
-    }
-    else if (s == "s6" && a == 'U') {
-        return "s3";
-    }
     return "s5";
 }
 
@@ -105,12 +77,10 @@ string MZMTIN002::v_iteration::nextState(const string& s, char a) {
 bool MZMTIN002::v_iteration::convergedEnough(const map<string, double>& oldValues) {
     double sum = 0;
     double sum2 = 0;
-    for (const auto& i : oldValues) {
+    for (const auto& i : oldValues)
         sum += i.second;
-    }
-    for (const auto& i : values) {
+    for (const auto& i : values)
         sum2 += i.second;
-    }
     return sum2 - sum < THETA;
 }
 
@@ -128,23 +98,20 @@ void MZMTIN002::v_iteration::doValueIteration() {
             vector<double> new_max;
             for (auto action : possibleActions(state.first)) {
                 double max_neighbour = 0;
-                if (oldValues[nextState(state.first, action)] > max_neighbour) {
+                if (oldValues[nextState(state.first, action)] > max_neighbour)
                     max_neighbour = oldValues[nextState(state.first, action)] ;
-                }
                 new_max.push_back(R(state.first, action) + GAMMA * max_neighbour);
             }
-            if (!new_max.empty()) {
+            if (!new_max.empty())
                 curr_max = *max_element(new_max.begin(), new_max.end());
-            }
             values[state.first] = curr_max;
         }
         count++;
         converged = convergedEnough(oldValues);
     }
 
-    for (const auto& x : values) {
+    for (const auto& x : values)
         cout << x.first << " - " << x.second << endl;
-    }
     cout << "\nConvergence in " << count << " iterations." << endl;
 }
 
@@ -162,20 +129,17 @@ void MZMTIN002::v_iteration::getOptPolicy() {
             if (values[nextState(curr_state, action)] > curr_max || values[nextState(curr_state, action)] == 0) {
                 curr_max = values[nextState(curr_state, action)];
                 next_state = nextState(curr_state, action);
-                if (values[nextState(curr_state, action)] == 0) {
+                if (values[nextState(curr_state, action)] == 0)
                     break;
-                }
             }
         }
         curr_state = next_state;
         actions.push_back(curr_state);
     }
     for (int i = 0; i < actions.size(); i++) {
-        if (i < actions.size() -1) {
+        if (i < actions.size() -1)
             cout << actions[i] << " -> ";
-        }
-        else {
+        else
             cout << actions[i] << endl;
-        }
     }
 }
